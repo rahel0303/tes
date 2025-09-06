@@ -10,14 +10,25 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      User.belongsToMany(models.Team, {
+        through: models.Favorite,
+        foreignKey: 'userId',
+        otherKey: 'teamId'
+      });
     }
   }
   User.init({
-    email: DataTypes.STRING,
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true
+    },
     passwordHash: DataTypes.STRING,
     displayName: DataTypes.STRING,
-    googleSub: DataTypes.STRING
+    googleSub: {
+      type: DataTypes.STRING,
+      unique: true
+    }
   }, {
     sequelize,
     modelName: 'User',

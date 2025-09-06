@@ -10,15 +10,29 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Player.belongsToMany(models.Team, {
+        through: models.SquadMembership,
+        foreignKey: 'playerId',
+        otherKey: 'teamId'
+      });
     }
   }
   Player.init({
-    fullName: DataTypes.STRING,
+    fullName: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     nationality: DataTypes.STRING,
-    primaryPosition: DataTypes.STRING,
+    primaryPosition: {
+      type: DataTypes.ENUM('GK', 'DF', 'MF', 'FW'),
+      allowNull: false
+    },
     thumbUrl: DataTypes.STRING,
-    externalRef: DataTypes.STRING,
+    externalRef: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true
+    },
     bornAt: DataTypes.DATE
   }, {
     sequelize,

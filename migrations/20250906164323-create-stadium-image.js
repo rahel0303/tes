@@ -10,16 +10,25 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       teamId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Teams',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       imageUrl: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       source: {
         type: Sequelize.STRING
       },
       sortOrder: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        defaultValue: 0
       },
       createdAt: {
         allowNull: false,
@@ -30,6 +39,9 @@ module.exports = {
         type: Sequelize.DATE
       }
     });
+
+    await queryInterface.addIndex('StadiumImages', ['teamId']);
+    await queryInterface.addIndex('StadiumImages', ['teamId', 'sortOrder']);
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('StadiumImages');

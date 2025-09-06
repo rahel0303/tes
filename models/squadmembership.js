@@ -10,16 +10,44 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      SquadMembership.belongsTo(models.Team, { foreignKey: 'teamId' });
+      SquadMembership.belongsTo(models.Player, { foreignKey: 'playerId' });
     }
   }
   SquadMembership.init({
-    teamId: DataTypes.INTEGER,
-    playerId: DataTypes.INTEGER,
-    season: DataTypes.STRING,
-    position: DataTypes.STRING,
+    teamId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Teams',
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
+    },
+    playerId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Players',
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
+    },
+    season: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    position: {
+      type: DataTypes.ENUM('GK', 'DF', 'MF', 'FW'),
+      allowNull: false
+    },
     shirtNumber: DataTypes.INTEGER,
-    isCurrent: DataTypes.BOOLEAN
+    isCurrent: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true
+    }
   }, {
     sequelize,
     modelName: 'SquadMembership',

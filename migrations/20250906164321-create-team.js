@@ -10,10 +10,17 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       leagueId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Leagues',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL'
       },
       name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       shortName: {
         type: Sequelize.STRING
@@ -40,7 +47,9 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       externalRef: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true
       },
       description: {
         type: Sequelize.TEXT
@@ -57,6 +66,8 @@ module.exports = {
         type: Sequelize.DATE
       }
     });
+
+    await queryInterface.addIndex('Teams', ['leagueId']);
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Teams');

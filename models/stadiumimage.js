@@ -10,14 +10,29 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      StadiumImage.belongsTo(models.Team, { foreignKey: 'teamId' });
     }
   }
   StadiumImage.init({
-    teamId: DataTypes.INTEGER,
-    imageUrl: DataTypes.STRING,
+    teamId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Teams',
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
+    },
+    imageUrl: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     source: DataTypes.STRING,
-    sortOrder: DataTypes.INTEGER
+    sortOrder: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0
+    }
   }, {
     sequelize,
     modelName: 'StadiumImage',

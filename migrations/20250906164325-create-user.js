@@ -10,7 +10,9 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       email: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true
       },
       passwordHash: {
         type: Sequelize.STRING
@@ -19,7 +21,8 @@ module.exports = {
         type: Sequelize.STRING
       },
       googleSub: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        unique: true
       },
       createdAt: {
         allowNull: false,
