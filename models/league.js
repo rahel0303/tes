@@ -10,13 +10,20 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      League.hasMany(models.Team, { foreignKey: 'leagueId' });
     }
   }
   League.init({
-    name: DataTypes.STRING,
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     country: DataTypes.STRING,
-    externalRef: DataTypes.STRING,
+    externalRef: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true
+    },
     logoUrl: DataTypes.STRING
   }, {
     sequelize,
