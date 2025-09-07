@@ -7,42 +7,54 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       fullName: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
       },
       nationality: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       primaryPosition: {
-        type: Sequelize.ENUM('GK', 'DF', 'MF', 'FW'),
-        allowNull: false
+        type: Sequelize.STRING,
       },
       thumbUrl: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       externalRef: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: true
+        unique: true,
       },
       bornAt: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
+      teamId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Teams',
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
+      },
+      shirtNumber: {
+        type: Sequelize.STRING,
+      },
+
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
+
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Players');
-    await queryInterface.sequelize.query('DROP TYPE IF EXISTS "enum_Players_primaryPosition";');
-  }
+  },
 };

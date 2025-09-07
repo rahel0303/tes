@@ -7,69 +7,66 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       leagueId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'Leagues',
-          key: 'id'
+          key: 'id',
         },
         onUpdate: 'CASCADE',
-        onDelete: 'SET NULL'
+        onDelete: 'SET NULL',
       },
       name: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
       },
       shortName: {
-        type: Sequelize.STRING
-      },
-      badgeUrl: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       logoUrl: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       foundedYear: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       country: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       stadiumName: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       stadiumCity: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       stadiumCapacity: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       externalRef: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: true
+        unique: true,
       },
       description: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       lastSyncedAt: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
 
     await queryInterface.addIndex('Teams', ['leagueId']);
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Teams');
-  }
+  },
 };

@@ -7,37 +7,37 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       teamId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'Teams',
-          key: 'id'
+          key: 'id',
         },
         onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
+        onDelete: 'CASCADE',
       },
       imageUrl: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
       },
       source: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       sortOrder: {
         type: Sequelize.INTEGER,
-        defaultValue: 0
+        defaultValue: 0,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
 
     await queryInterface.addIndex('StadiumImages', ['teamId']);
@@ -45,5 +45,5 @@ module.exports = {
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('StadiumImages');
-  }
+  },
 };
